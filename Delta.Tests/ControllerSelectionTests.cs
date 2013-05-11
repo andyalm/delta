@@ -36,6 +36,13 @@ namespace Delta.Tests
         }
 
         [Test]
+        public void RequestForControllerInheritedFromPreviousVersion()
+        {
+            var controllerDescriptor = GetControllerDescriptorFor("lightbox", 2);
+            controllerDescriptor.ControllerType.Should().Be(typeof (Controllers.V1.LightboxController));
+        }
+
+        [Test]
         public void ControllerNotFound()
         {
             Action getControllerDescriptor = () => GetControllerDescriptorFor("nosuchcontroller", 1);
@@ -44,12 +51,10 @@ namespace Delta.Tests
         
         private static HttpControllerDescriptor GetControllerDescriptorFor(string controllerNameInRoute, int versionInRoute)
         {
-            var versionSelector = new Mock<IVersionSelector>();
-            versionSelector.Setup(v => v.GetVersion(It.IsAny<HttpRequestMessage>())).Returns(versionInRoute);
             var request = new HttpRequestMessage();
-            request.SetController(controllerNameInRoute);
+            request.SetRouteData(new{ controller = controllerNameInRoute, version = versionInRoute.ToString() });
             var config = new HttpConfiguration();
-            var controllerSelector = new DeltaVersionedControllerSelector(config, versionSelector.Object,
+            var controllerSelector = new DeltaVersionedControllerSelector(config, new RouteVersionSelector(), 
                                                                           new NamespaceControllerVersionSelector());
             var controllerDescriptor = controllerSelector.SelectController(request);
             return controllerDescriptor;
@@ -61,9 +66,9 @@ namespace Delta.Tests
 
     internal static class HttpRequestMessageExtensions
     {
-        public static void SetController(this HttpRequestMessage request, string controllerName)
+        public static void SetRouteData(this HttpRequestMessage request, object values)
         {
-            request.Properties[HttpPropertyKeys.HttpRouteDataKey] = new HttpRouteData(new HttpRoute(), new HttpRouteValueDictionary(new { controller = controllerName }));
+            request.Properties[HttpPropertyKeys.HttpRouteDataKey] = new HttpRouteData(new HttpRoute(), new HttpRouteValueDictionary(values));
         }
     }
 }
