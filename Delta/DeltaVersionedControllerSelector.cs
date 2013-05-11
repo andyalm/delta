@@ -65,7 +65,7 @@ namespace Delta
             if (_controllerInfoCache.Value.TryGetValue(controllerName, out controllerDescriptors))
             {
                 int currentVersion = _versionSelector.GetVersion(request);
-                var matchingController = controllerDescriptors.Values.FirstOrDefault(d => d.Version() <= currentVersion);
+                var matchingController = controllerDescriptors.Values.FirstOrDefault(d => d.Version() <= currentVersion && currentVersion < d.DeprecatedVersion());
                 if (matchingController != null)
                     return matchingController;
             }
@@ -106,50 +106,18 @@ namespace Delta
         private ConcurrentDictionary<string, SortedList<int, HttpControllerDescriptor>> InitializeControllerInfoCache()
         {
             var result = new ConcurrentDictionary<string, SortedList<int, HttpControllerDescriptor>>(StringComparer.OrdinalIgnoreCase);
-            //var duplicateControllers = new HashSet<string>();
-            //Dictionary<string, ILookup<string, Type>> controllerTypeGroups = _controllerTypeCache.Cache;
-
-            //foreach (KeyValuePair<string, ILookup<string, Type>> controllerTypeGroup in controllerTypeGroups)
-            //{
-            //    string controllerName = controllerTypeGroup.Key;
-
-            //    foreach (IGrouping<string, Type> controllerTypesGroupedByNs in controllerTypeGroup.Value)
-            //    {
-            //        foreach (Type controllerType in controllerTypesGroupedByNs)
-            //        {
-            //            if (result.Keys.Contains(controllerName))
-            //            {
-            //                duplicateControllers.Add(controllerName);
-            //                break;
-            //            }
-            //            else
-            //            {
-            //                result.TryAdd(controllerName, new HttpControllerDescriptor(_configuration, controllerName, controllerType));
-            //            }
-            //        }
-            //    }
-            //}
-
-            //foreach (string duplicateController in duplicateControllers)
-            //{
-            //    HttpControllerDescriptor descriptor;
-            //    result.TryRemove(duplicateController, out descriptor);
-            //}
-
             var controllerTypes = _controllersResolver.GetControllerTypes(_assembliesResolver);
             foreach (var controllerType in controllerTypes)
             {
-                int version = _controllerVersionSelector.GetVersion(controllerType);
-
                 string name = controllerType.Name.Substring(0,
                                                             controllerType.Name.Length -
                                                             DefaultHttpControllerSelector.ControllerSuffix.Length);
+                int version = _controllerVersionSelector.GetVersion(controllerType);
 
                 var descriptors = result.GetOrAdd(name, _ => new SortedList<int,HttpControllerDescriptor>(new ReverseComparer()) );
-                HttpControllerDescriptor newDescriptor;
-                descriptors.Add(version, newDescriptor = new HttpControllerDescriptor(_configuration, name, controllerType));
-
+                var newDescriptor = new HttpControllerDescriptor(_configuration, name, controllerType);
                 newDescriptor.SetVersion(version);
+                descriptors.Add(version, newDescriptor);
             }
 
             return result;

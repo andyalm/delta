@@ -69,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControllerSelectionTests.cs" />
+    <Compile Include="Controllers\V1\BadIdeaController.cs" />
     <Compile Include="Controllers\V1\CartController.cs" />
     <Compile Include="Controllers\V1\LightboxController.cs" />
     <Compile Include="Controllers\V2\CartController.cs" />

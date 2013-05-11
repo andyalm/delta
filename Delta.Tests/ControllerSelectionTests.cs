@@ -43,6 +43,21 @@ namespace Delta.Tests
         }
 
         [Test]
+        public void ControllerIsNotInheritedWhenItIsDepricated()
+        {
+            Action getControllerDescriptor = () => GetControllerDescriptorFor("badidea", 2);
+            getControllerDescriptor.ShouldThrow<HttpResponseException>().Where(ex => ex.Response.StatusCode == HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public void DepricatedControllerIsStillValidInPreviousVersions()
+        {
+            var controllerDescriptor = GetControllerDescriptorFor("badidea", 1);
+            controllerDescriptor.ControllerType.Should().Be(typeof (Controllers.V1.BadIdeaController));
+        }
+
+
+        [Test]
         public void ControllerNotFound()
         {
             Action getControllerDescriptor = () => GetControllerDescriptorFor("nosuchcontroller", 1);
