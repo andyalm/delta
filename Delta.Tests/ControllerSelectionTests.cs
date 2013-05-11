@@ -69,7 +69,7 @@ namespace Delta.Tests
             var request = new HttpRequestMessage();
             request.SetRouteData(new{ controller = controllerNameInRoute, version = versionInRoute.ToString() });
             var config = new HttpConfiguration();
-            var controllerSelector = new DeltaVersionedControllerSelector(config, new RouteVersionSelector(), 
+            var controllerSelector = new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), 
                                                                           new NamespaceControllerVersionSelector());
             var controllerDescriptor = controllerSelector.SelectController(request);
             return controllerDescriptor;

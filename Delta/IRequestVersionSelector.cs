@@ -2,7 +2,7 @@
 
 namespace Delta
 {
-    public interface IVersionSelector
+    public interface IRequestVersionSelector
     {
         int GetVersion(HttpRequestMessage request);
     }

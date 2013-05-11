@@ -3,7 +3,7 @@ using System.Net.Http;
 
 namespace Delta
 {
-    public class RouteVersionSelector : IVersionSelector
+    public class RouteRequestVersionSelector : IRequestVersionSelector
     {
         public int GetVersion(HttpRequestMessage request)
         {

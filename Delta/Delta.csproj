@@ -60,9 +60,10 @@
     <Compile Include="DeprecatedInVersionAttribute.cs" />
     <Compile Include="HttpControllerDescriptorExtensions.cs" />
     <Compile Include="IControllerVersionSelector.cs" />
-    <Compile Include="IVersionSelector.cs" />
+    <Compile Include="IRequestVersionSelector.cs" />
+    <Compile Include="NamespaceControllerVersionSelector.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RouteVersionSelector.cs" />
+    <Compile Include="RouteRequestVersionSelector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

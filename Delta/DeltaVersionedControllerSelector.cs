@@ -24,14 +24,14 @@ namespace Delta
         private readonly HttpConfiguration _configuration;
         
         private readonly Lazy<ConcurrentDictionary<string, SortedList<int, HttpControllerDescriptor>>> _controllerInfoCache;
-        private readonly IVersionSelector _versionSelector;
+        private readonly IRequestVersionSelector _requestVersionSelector;
         private readonly IControllerVersionSelector _controllerVersionSelector;
 
         private readonly IAssembliesResolver _assembliesResolver;
         private readonly IHttpControllerTypeResolver _controllersResolver;
 
         
-        public DeltaVersionedControllerSelector(HttpConfiguration configuration, IVersionSelector versionSelector, IControllerVersionSelector controllerVersionSelector)
+        public DeltaVersionedControllerSelector(HttpConfiguration configuration, IRequestVersionSelector requestVersionSelector, IControllerVersionSelector controllerVersionSelector)
         {
             if (configuration == null)
             {
@@ -40,7 +40,7 @@ namespace Delta
 
             _controllerInfoCache = new Lazy<ConcurrentDictionary<string, SortedList<int, HttpControllerDescriptor>>>(InitializeControllerInfoCache);
             _configuration = configuration;
-            _versionSelector = versionSelector;
+            _requestVersionSelector = requestVersionSelector;
             _controllerVersionSelector = controllerVersionSelector;
 
             _assembliesResolver = _configuration.Services.GetAssembliesResolver();
@@ -64,7 +64,7 @@ namespace Delta
             SortedList<int,HttpControllerDescriptor> controllerDescriptors;
             if (_controllerInfoCache.Value.TryGetValue(controllerName, out controllerDescriptors))
             {
-                int currentVersion = _versionSelector.GetVersion(request);
+                int currentVersion = _requestVersionSelector.GetVersion(request);
                 var matchingController = controllerDescriptors.Values.FirstOrDefault(d => d.Version() <= currentVersion && currentVersion < d.DeprecatedVersion());
                 if (matchingController != null)
                     return matchingController;
