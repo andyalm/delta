@@ -3,3 +3,4 @@
 [Pp]ackages/
 *.user
 *.suo
+_ReSharper.*

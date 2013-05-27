@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="DeltaVersionedControllerSelector.cs" />
     <Compile Include="DeprecatedInVersionAttribute.cs" />
+    <Compile Include="Error.cs" />
     <Compile Include="HttpControllerDescriptorExtensions.cs" />
     <Compile Include="IControllerVersionSelector.cs" />
     <Compile Include="IRequestVersionSelector.cs" />
@@ -67,6 +68,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ApiExplorer\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

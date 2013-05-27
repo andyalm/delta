@@ -80,7 +80,39 @@ namespace Delta
 
         public virtual IDictionary<string, HttpControllerDescriptor> GetControllerMapping()
         {
-            throw new NotImplementedException();
+            var dictionary = new Dictionary<string, HttpControllerDescriptor>();
+
+            var cache = _controllerInfoCache.Value;
+            
+            foreach (var versionKey in cache.Keys)
+            {
+                var versionItem = cache[versionKey];
+                foreach (var versionedControllers in versionItem)
+                {
+                    var thingy = versionedControllers.Value;
+
+                    var descriptor = new HttpControllerDescriptor
+                    {
+                        ControllerType = thingy.ControllerType,
+                        Configuration = thingy.Configuration,
+                        ControllerName = thingy.ControllerName,
+
+                    };
+                    //todo: add properties...
+
+
+                    dictionary.Add(thingy.ControllerName, descriptor);
+                }
+                
+
+
+            }
+
+
+
+            return dictionary;
+            
+            
             //return _controllerInfoCache.Value.ToDictionary(c => c.Key, c => c.Value, StringComparer.OrdinalIgnoreCase);
         }
 
