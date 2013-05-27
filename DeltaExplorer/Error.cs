@@ -1,12 +1,12 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-using System.Web.Http.Properties;
 
-namespace System.Web.Http
+namespace DeltaExplorer
 {
     /// <summary>
     /// Utility class for creating and unwrapping <see cref="Exception"/> instances.

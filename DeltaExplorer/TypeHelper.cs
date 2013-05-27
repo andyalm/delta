@@ -1,15 +1,16 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace System.Web.Http.Internal
+namespace DeltaExplorer
 {
     /// <summary>
     /// A static class that provides various <see cref="Type"/> related helpers.

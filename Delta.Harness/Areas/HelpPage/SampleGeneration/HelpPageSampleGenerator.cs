@@ -50,7 +50,7 @@ namespace Harness2.Areas.HelpPage
         /// </summary>
         /// <param name="api">The <see cref="ApiDescription"/>.</param>
         /// <returns>The samples keyed by media type.</returns>
-        public IDictionary<MediaTypeHeaderValue, object> GetSampleRequests(ApiDescription api)
+        public IDictionary<MediaTypeHeaderValue, object> GetSampleRequests(DeltaExplorer.ApiDescription api)
         {
             return GetSample(api, SampleDirection.Request);
         }
@@ -60,7 +60,7 @@ namespace Harness2.Areas.HelpPage
         /// </summary>
         /// <param name="api">The <see cref="ApiDescription"/>.</param>
         /// <returns>The samples keyed by media type.</returns>
-        public IDictionary<MediaTypeHeaderValue, object> GetSampleResponses(ApiDescription api)
+        public IDictionary<MediaTypeHeaderValue, object> GetSampleResponses(DeltaExplorer.ApiDescription api)
         {
             return GetSample(api, SampleDirection.Response);
         }
@@ -71,7 +71,7 @@ namespace Harness2.Areas.HelpPage
         /// <param name="api">The <see cref="ApiDescription"/>.</param>
         /// <param name="sampleDirection">The value indicating whether the sample is for a request or for a response.</param>
         /// <returns>The samples keyed by media type.</returns>
-        public virtual IDictionary<MediaTypeHeaderValue, object> GetSample(ApiDescription api, SampleDirection sampleDirection)
+        public virtual IDictionary<MediaTypeHeaderValue, object> GetSample(DeltaExplorer.ApiDescription api, SampleDirection sampleDirection)
         {
             if (api == null)
             {
@@ -177,7 +177,7 @@ namespace Harness2.Areas.HelpPage
         /// <param name="sampleDirection">The value indicating whether the sample is for a request or a response.</param>
         /// <param name="formatters">The formatters.</param>
         [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", Justification = "This is only used in advanced scenarios.")]
-        public virtual Type ResolveType(ApiDescription api, string controllerName, string actionName, IEnumerable<string> parameterNames, SampleDirection sampleDirection, out Collection<MediaTypeFormatter> formatters)
+        public virtual Type ResolveType(DeltaExplorer.ApiDescription api, string controllerName, string actionName, IEnumerable<string> parameterNames, SampleDirection sampleDirection, out Collection<MediaTypeFormatter> formatters)
         {
             if (!Enum.IsDefined(typeof(SampleDirection), sampleDirection))
             {

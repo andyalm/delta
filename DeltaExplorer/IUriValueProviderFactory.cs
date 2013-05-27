@@ -1,8 +1,9 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
 using System.Diagnostics.CodeAnalysis;
+using System.Web.Http.ValueProviders;
 
-namespace System.Web.Http.ValueProviders
+namespace DeltaExplorer
 {
     /// <summary>
     /// This interface is implemented by any <see cref="ValueProviderFactory"/> that supports

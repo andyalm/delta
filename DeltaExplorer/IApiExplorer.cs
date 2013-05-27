@@ -2,7 +2,7 @@
 
 using System.Collections.ObjectModel;
 
-namespace System.Web.Http.Description
+namespace DeltaExplorer
 {
     /// <summary>
     /// Defines the interface for getting a collection of <see cref="ApiDescription"/>.

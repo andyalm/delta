@@ -12,7 +12,7 @@ namespace Harness2.Areas.HelpPage
         /// </summary>
         /// <param name="description">The <see cref="ApiDescription"/>.</param>
         /// <returns>The ID as a string.</returns>
-        public static string GetFriendlyId(this ApiDescription description)
+        public static string GetFriendlyId(this DeltaExplorer.ApiDescription description)
         {
             string path = description.RelativePath;
             string[] urlParts = path.Split('?');

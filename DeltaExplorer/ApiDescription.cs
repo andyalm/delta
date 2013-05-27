@@ -1,12 +1,15 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
+using System;
 using System.Collections.ObjectModel;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Http.Description;
 using System.Web.Http.Routing;
 
-namespace System.Web.Http.Description
+namespace DeltaExplorer
 {
     /// <summary>
     /// Describes an API defined by relative URI path and HTTP method.

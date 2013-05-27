@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
@@ -8,13 +8,13 @@ using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Text.RegularExpressions;
+using System.Web.Http;
 using System.Web.Http.Controllers;
+using System.Web.Http.Description;
 using System.Web.Http.Dispatcher;
-using System.Web.Http.Internal;
-using System.Web.Http.Properties;
 using System.Web.Http.Routing;
 
-namespace System.Web.Http.Description
+namespace DeltaExplorer
 {
     /// <summary>
     /// Explores the URI space of the service based on routes, controllers and actions available in the system.

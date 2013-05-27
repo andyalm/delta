@@ -1,12 +1,10 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-using System.Collections.Concurrent;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.Contracts;
-using System.Linq;
 
-namespace System.Web.Http
+namespace DeltaExplorer
 {
     /// <summary>
     /// Extension methods for <see cref="IDictionary{TKey,TValue}"/>.
