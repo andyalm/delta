@@ -175,7 +175,7 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DeltaExplorer\Delta.Explorer.csproj">
+    <ProjectReference Include="..\Delta.Explorer\Delta.Explorer.csproj">
       <Project>{14c45f60-4808-410c-a701-dee5a3e46f82}</Project>
       <Name>Delta.Explorer</Name>
     </ProjectReference>

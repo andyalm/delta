@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     // Represents a segment of a URI that is not a separator. It contains subsegments such as literals and parameters.
     internal sealed class PathContentSegment : PathSegment

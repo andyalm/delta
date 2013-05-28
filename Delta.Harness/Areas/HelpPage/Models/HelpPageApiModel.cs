@@ -23,7 +23,7 @@ namespace Harness2.Areas.HelpPage.Models
         /// <summary>
         /// Gets or sets the <see cref="ApiDescription"/> that describes the API.
         /// </summary>
-        public DeltaExplorer.ApiDescription ApiDescription { get; set; }
+        public Delta.Explorer.ApiDescription ApiDescription { get; set; }
 
         /// <summary>
         /// Gets the sample requests associated with the API.

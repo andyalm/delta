@@ -9,7 +9,7 @@ using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 using System.Web.Http.Routing;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// Describes an API defined by relative URI path and HTTP method.

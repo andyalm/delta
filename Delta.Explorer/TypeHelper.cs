@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// A static class that provides various <see cref="Type"/> related helpers.

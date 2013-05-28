@@ -2,7 +2,7 @@ using System;
 //using System.Web.Http;
 using System.Web.Mvc;
 using Harness2.Areas.HelpPage.Models;
-using DeltaExplorer;
+using Delta.Explorer;
 namespace Harness2.Areas.HelpPage.Controllers
 {
     /// <summary>

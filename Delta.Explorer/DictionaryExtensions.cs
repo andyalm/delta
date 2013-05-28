@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// Extension methods for <see cref="IDictionary{TKey,TValue}"/>.

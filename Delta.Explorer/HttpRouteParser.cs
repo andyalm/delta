@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Diagnostics.Contracts;
 using System.Linq;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     internal static class HttpRouteParser
     {

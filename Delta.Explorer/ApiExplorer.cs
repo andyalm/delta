@@ -14,7 +14,7 @@ using System.Web.Http.Description;
 using System.Web.Http.Dispatcher;
 using System.Web.Http.Routing;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// Explores the URI space of the service based on routes, controllers and actions available in the system.

@@ -2,7 +2,7 @@
 
 using System.Web.Http.Routing;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// Represents a URI generated from a <see cref="HttpParsedRoute"/>. 

@@ -17,14 +17,21 @@ namespace Harness2
 
         protected void Application_Start(object sender, EventArgs e)
         {
+            const bool useCustom = true;
+
 
             var config = GlobalConfiguration.Configuration;
-            //config.Services.Replace(typeof(IHttpControllerSelector), new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), new NamespaceControllerVersionSelector()));
+
+            if(useCustom)
+                config.Services.Replace(typeof(IHttpControllerSelector), new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), new NamespaceControllerVersionSelector()));
             
 
             AreaRegistration.RegisterAllAreas();
-            //config.Routes.MapHttpRoute("main", "api/{Version}/{controller}");
-            config.Routes.MapHttpRoute("main", "api/{controller}");
+            
+            if(useCustom)
+                config.Routes.MapHttpRoute("main", "api/{Version}/{controller}");
+            else
+                config.Routes.MapHttpRoute("main", "api/{controller}");
 
         }
 

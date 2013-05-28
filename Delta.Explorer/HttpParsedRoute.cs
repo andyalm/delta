@@ -10,7 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Web.Http.Routing;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     internal sealed class HttpParsedRoute
     {

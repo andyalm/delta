@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     // Represents a "/" separator in a URI
     internal sealed class PathSeparatorSegment : PathSegment

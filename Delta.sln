@@ -13,7 +13,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BE1382
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.Harness", "Delta.Harness\Delta.Harness.csproj", "{6C4E25C9-5A46-4536-BBE3-162813F18616}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.Explorer", "DeltaExplorer\Delta.Explorer.csproj", "{14C45F60-4808-410C-A701-DEE5A3E46F82}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Delta.Explorer", "Delta.Explorer\Delta.Explorer.csproj", "{14C45F60-4808-410C-A701-DEE5A3E46F82}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

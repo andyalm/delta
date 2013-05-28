@@ -2,7 +2,7 @@
 
 using System;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     // Represents a parameter subsegment of a ContentPathSegment
     internal sealed class PathParameterSubsegment : PathSubsegment

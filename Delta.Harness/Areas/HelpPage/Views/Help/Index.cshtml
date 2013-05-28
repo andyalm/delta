@@ -2,13 +2,13 @@
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
 @using Harness2.Areas.HelpPage.Models
-@model Collection<DeltaExplorer.ApiDescription>
+@model Collection<Delta.Explorer.ApiDescription>
 
 @{
     ViewBag.Title = "ASP.NET Web API Help Page";
 
     // Group APIs by controller
-    ILookup<string, DeltaExplorer.ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor.ControllerName);
+    ILookup<string, Delta.Explorer.ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor.ControllerName);
 }
 
 <header>

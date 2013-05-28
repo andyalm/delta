@@ -1,6 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     // Represents a literal subsegment of a ContentPathSegment
     internal sealed class PathLiteralSubsegment : PathSubsegment

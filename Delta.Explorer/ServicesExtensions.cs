@@ -17,7 +17,7 @@ using System.Web.Http.Tracing;
 using System.Web.Http.Validation;
 using System.Web.Http.ValueProviders;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// This provides a centralized list of type-safe accessors describing where and how we get services.

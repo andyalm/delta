@@ -3,7 +3,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Web.Http.ValueProviders;
 
-namespace DeltaExplorer
+namespace Delta.Explorer
 {
     /// <summary>
     /// This interface is implemented by any <see cref="ValueProviderFactory"/> that supports
