@@ -7,8 +7,8 @@
     <ProjectGuid>{14C45F60-4808-410C-A701-DEE5A3E46F82}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DeltaExplorer</RootNamespace>
-    <AssemblyName>DeltaExplorer</AssemblyName>
+    <RootNamespace>Delta.Explorer</RootNamespace>
+    <AssemblyName>Delta.Explorer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -72,18 +72,25 @@
       <DependentUpon>SRResources.resx</DependentUpon>
     </Compile>
     <Compile Include="TypeHelper.cs" />
+    <Compile Include="VersionedApiExplorer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="CommonWebApiResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>CommonWebApiResources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>System.Web.Http</CustomToolNamespace>
+      <CustomToolNamespace>Delta.Explorer</CustomToolNamespace>
     </EmbeddedResource>
     <EmbeddedResource Include="SRResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SRResources.Designer.cs</LastGenOutput>
-      <CustomToolNamespace>System.Web.Http</CustomToolNamespace>
+      <CustomToolNamespace>Delta.Explorer</CustomToolNamespace>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Delta\Delta.csproj">
+      <Project>{1402853e-4c05-4fe8-9eb8-1efee51566e1}</Project>
+      <Name>Delta</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

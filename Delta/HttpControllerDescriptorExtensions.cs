@@ -4,7 +4,7 @@ using System.Web.Http.Controllers;
 
 namespace Delta
 {
-    internal static class HttpControllerDescriptorExtensions
+    public static class HttpControllerDescriptorExtensions
     {
         private const string VersionKey = "DeltaVersion";
         private const string DeprecatedVersionKey = "DeltaDeprecatedVersion";

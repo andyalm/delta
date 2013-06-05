@@ -27,9 +27,18 @@ namespace Harness2
             
 
             AreaRegistration.RegisterAllAreas();
-            
-            if(useCustom)
+
+            var customConfig = DocConfiguration.Configuration;
+
+            if (useCustom)
+            {
                 config.Routes.MapHttpRoute("main", "api/{Version}/{controller}");
+
+                
+                customConfig.Routes.MapHttpRoute("main.v1", "api/V1/{controller}",new {Version=1}); //Of course, we'd need a safer name to ensure uniqueness...
+                customConfig.Routes.MapHttpRoute("main.v2", "api/V2/{controller}", new { Version = 2 });
+                customConfig.Routes.MapHttpRoute("main.v3", "api/V3/{controller}", new { Version = 3 });
+            }
             else
                 config.Routes.MapHttpRoute("main", "api/{controller}");
 

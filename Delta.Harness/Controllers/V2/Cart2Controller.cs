@@ -6,19 +6,35 @@ using System.Web.Http;
 
 namespace Delta.Tests.Controllers.V2
 {
-    //For short term we're naming this incorrectly until we get Delta wired in.
+    /// <summary>
+    /// This is the 2nd cart thingy.
+    /// </summary>
     public class Cart2Controller : ApiController
     {
+
+        /// <summary>
+        /// Post (v2)
+        /// </summary>
+        /// <returns>Arbitrary integer</returns>
         public int Post()
         {
             return 99;
         }
 
+        /// <summary>
+        /// Get (v2)
+        /// </summary>
+        /// <returns></returns>
         public string Get()
         {
             return "Hello world! (v2)";
         }
 
+        /// <summary>
+        /// Put (v2)
+        /// </summary>
+        /// <returns></returns>
+        
         public string Put()
         {
             return "thingy";

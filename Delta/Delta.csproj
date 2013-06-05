@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="DeltaVersionedControllerSelector.cs" />
     <Compile Include="DeprecatedInVersionAttribute.cs" />
+    <Compile Include="DocConfiguration.cs" />
     <Compile Include="Error.cs" />
     <Compile Include="HttpControllerDescriptorExtensions.cs" />
     <Compile Include="IControllerVersionSelector.cs" />

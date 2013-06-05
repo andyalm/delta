@@ -1,6 +1,8 @@
 using System;
 //using System.Web.Http;
 using System.Web.Mvc;
+using Delta;
+using DeltaExplorer;
 using Harness2.Areas.HelpPage.Models;
 using Delta.Explorer;
 namespace Harness2.Areas.HelpPage.Controllers
@@ -24,7 +26,8 @@ namespace Harness2.Areas.HelpPage.Controllers
 
         public ActionResult Index()
         {
-            return View(ApiExplorerFactory.Current.ApiDescriptions);
+            var explorer = new VersionedApiExplorer(DocConfiguration.Configuration);
+            return View(explorer.ApiDescriptions);
         }
 
         public ActionResult Api(string apiId)
@@ -38,7 +41,7 @@ namespace Harness2.Areas.HelpPage.Controllers
                 }
             }
 
-            return View("Error");
+            return View("Error"); //Doesn't exist right now, apparently.
         }
     }
 }
