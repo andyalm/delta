@@ -100,7 +100,7 @@ namespace Delta
                     };
                     //todo: add properties...
 
-
+                    
                     dictionary.Add(thingy.ControllerName, descriptor);
                 }
                 

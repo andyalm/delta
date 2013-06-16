@@ -29,6 +29,8 @@ namespace Harness2
             AreaRegistration.RegisterAllAreas();
 
             var customConfig = DocConfiguration.Configuration;
+            if (useCustom)
+                customConfig.Services.Replace(typeof(IHttpControllerSelector), new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), new NamespaceControllerVersionSelector()));
 
             if (useCustom)
             {

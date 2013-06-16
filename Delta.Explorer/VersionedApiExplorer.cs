@@ -23,6 +23,14 @@ namespace DeltaExplorer
             int controllerVersion =
                 new NamespaceControllerVersionSelector().GetVersion(controllerDescriptor.ControllerType);
 
+            var matchingControllers = System.AppDomain.CurrentDomain.GetAssemblies()
+                  .SelectMany(a => a.GetTypes())
+                  .Where(
+                      t => typeof (ApiController).IsAssignableFrom(t) 
+                          && t.Name == controllerDescriptor.ControllerType.Name
+                          ).ToList();
+
+
             if (controllerVersion > routeVersion || controllerDescriptor.DeprecatedVersion() < routeVersion) return false;
 
             //Is route version greater than controller version? If so, we need to check to see whether another

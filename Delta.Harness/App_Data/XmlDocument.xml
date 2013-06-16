@@ -413,24 +413,24 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Delta.Tests.Controllers.V2.Cart2Controller">
+        <member name="T:Delta.Tests.Controllers.V2.CartController">
             <summary>
             This is the 2nd cart thingy.
             </summary>
         </member>
-        <member name="M:Delta.Tests.Controllers.V2.Cart2Controller.Post">
+        <member name="M:Delta.Tests.Controllers.V2.CartController.Post">
             <summary>
             Post (v2)
             </summary>
             <returns>Arbitrary integer</returns>
         </member>
-        <member name="M:Delta.Tests.Controllers.V2.Cart2Controller.Get">
+        <member name="M:Delta.Tests.Controllers.V2.CartController.Get">
             <summary>
             Get (v2)
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Delta.Tests.Controllers.V2.Cart2Controller.Put">
+        <member name="M:Delta.Tests.Controllers.V2.CartController.Put">
             <summary>
             Put (v2)
             </summary>

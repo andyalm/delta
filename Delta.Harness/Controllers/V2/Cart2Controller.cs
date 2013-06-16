@@ -9,7 +9,7 @@ namespace Delta.Tests.Controllers.V2
     /// <summary>
     /// This is the 2nd cart thingy.
     /// </summary>
-    public class Cart2Controller : ApiController
+    public class CartController : ApiController
     {
 
         /// <summary>
