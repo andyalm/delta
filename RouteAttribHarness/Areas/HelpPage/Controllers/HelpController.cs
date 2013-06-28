@@ -1,11 +1,9 @@
 using System;
-//using System.Web.Http;
+using System.Web.Http;
 using System.Web.Mvc;
-using Delta;
-using DeltaExplorer;
-using Harness2.Areas.HelpPage.Models;
-using Delta.Explorer;
-namespace Harness2.Areas.HelpPage.Controllers
+using RouteAttribHarness.Areas.HelpPage.Models;
+
+namespace RouteAttribHarness.Areas.HelpPage.Controllers
 {
     /// <summary>
     /// The controller that will handle requests for the help page.
@@ -13,22 +11,20 @@ namespace Harness2.Areas.HelpPage.Controllers
     public class HelpController : Controller
     {
         public HelpController()
-            : this(System.Web.Http.GlobalConfiguration.Configuration)
+            : this(GlobalConfiguration.Configuration)
         {
         }
 
-        public HelpController(System.Web.Http.HttpConfiguration config)
+        public HelpController(HttpConfiguration config)
         {
             Configuration = config;
         }
 
-        public System.Web.Http.HttpConfiguration Configuration { get; private set; }
+        public HttpConfiguration Configuration { get; private set; }
 
         public ActionResult Index()
         {
-            //var explorer = new VersionedApiExplorer(DocConfiguration.Configuration);
-            var explorer = Configuration.Services.GetApiExplorer();
-            return View(explorer.ApiDescriptions);
+            return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
         }
 
         public ActionResult Api(string apiId)
@@ -42,7 +38,7 @@ namespace Harness2.Areas.HelpPage.Controllers
                 }
             }
 
-            return View("Error"); //Doesn't exist right now, apparently.
+            return View("Error");
         }
     }
 }

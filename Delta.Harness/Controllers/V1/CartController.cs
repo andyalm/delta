@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Http;
+using AttributeRouting.Web.Http;
 
 namespace Delta.Tests.Controllers.V1
 {
@@ -17,6 +18,7 @@ namespace Delta.Tests.Controllers.V1
         /// Post (v1)
         /// </summary>
         /// <returns></returns>
+        [POST("Cart")]
         public int Post()
         {
             return 99;
@@ -26,6 +28,7 @@ namespace Delta.Tests.Controllers.V1
         /// Get (v1)
         /// </summary>
         /// <returns></returns>
+        [GET("api/cart")]
         public string Get()
         {
             return "Hello world!  (v1)";

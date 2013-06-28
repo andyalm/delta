@@ -17,13 +17,13 @@ namespace Harness2
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            const bool useCustom = true;
+            const bool useCustom = false;
 
 
             var config = GlobalConfiguration.Configuration;
 
-            if(useCustom)
-                config.Services.Replace(typeof(IHttpControllerSelector), new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), new NamespaceControllerVersionSelector()));
+            //if(useCustom)
+            //    config.Services.Replace(typeof(IHttpControllerSelector), new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), new NamespaceControllerVersionSelector()));
             
 
             AreaRegistration.RegisterAllAreas();
@@ -41,8 +41,8 @@ namespace Harness2
                 customConfig.Routes.MapHttpRoute("main.v2", "api/V2/{controller}", new { Version = 2 });
                 customConfig.Routes.MapHttpRoute("main.v3", "api/V3/{controller}", new { Version = 3 });
             }
-            else
-                config.Routes.MapHttpRoute("main", "api/{controller}");
+           // else
+                //config.Routes.MapHttpRoute("main", "api/{controller}");
 
         }
 
