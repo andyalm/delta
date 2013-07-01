@@ -1,6 +1,7 @@
 @using System.Web.Http
 @using System.Web.Http.Description
 @using System.Collections.ObjectModel
+@using RouteAttribExplorer
 @using RouteAttribHarness.Areas.HelpPage.Models
 @model Collection<ApiDescription>
 
@@ -8,7 +9,7 @@
     ViewBag.Title = "ASP.NET Web API Help Page";
 
     // Group APIs by controller
-    ILookup<string, ApiDescription> apiGroups = Model.ToLookup(api => api.ActionDescriptor.ControllerDescriptor.ControllerName);
+    ILookup<string, ApiDescription> apiGroups = Model.ToLookup(api => "V" +  new NamespaceControllerVersionSelector().GetVersion(api.ActionDescriptor.ControllerDescriptor.ControllerType) + " " + api.ActionDescriptor.ControllerDescriptor.ControllerName);
 }
 
 <header>

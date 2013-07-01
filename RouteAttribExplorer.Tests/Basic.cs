@@ -11,16 +11,16 @@ namespace RouteAttribExplorer.Tests
     [TestFixture]
     public class Basic
     {
-        [Test]
-        public void SimpleGet()
-        {
-            var explorer = new RouteAttribExplorer.Explorer(this.GetType().Assembly);
+        //[Test]
+        //public void SimpleGet()
+        //{
+        //    var explorer = new RouteAttribExplorer.Explorer(this.GetType().Assembly, GlobalConfiguration.Configuration);
 
-            var descriptions = explorer.ApiDescriptions;
+        //    var descriptions = explorer.ApiDescriptions;
 
-            descriptions.Should().HaveCount(1);
+        //    descriptions.Should().HaveCount(1);
 
 
-        }
+        //}
     }
 }

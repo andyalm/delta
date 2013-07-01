@@ -6,7 +6,7 @@ using System.Web.Http;
 using AttributeRouting;
 using AttributeRouting.Web.Http;
 
-namespace RouteAttribHarness.Controllers.V1
+namespace RouteAttribHarness.Controllers.V2
 {
     [RoutePrefix("api")]
     [RoutePrefix("api2")]
@@ -19,12 +19,12 @@ namespace RouteAttribHarness.Controllers.V1
         }
 
         /// <summary>
-        /// Adding stuff to a thingy.
+        /// What's a lightbox without waffles?
         /// </summary>
-        /// <param name="thingy">Thingy is the parameter!  W00t!</param>
+        /// <param name="thingy"></param>
         /// <returns></returns>
-        [POST("lightbox")]
-        public int AddStuff(Thingy thingy)
+        [POST("lightboxwaffle")]
+        public int AddStuff(V1.Thingy thingy)
         {
             return 99;
         }

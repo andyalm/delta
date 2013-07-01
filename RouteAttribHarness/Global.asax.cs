@@ -15,7 +15,7 @@ namespace RouteAttribHarness
 
         protected void Application_Start(object sender, EventArgs e)
         {
-            GlobalConfiguration.Configuration.Services.Replace(typeof(IApiExplorer), new RouteAttribExplorer.Explorer(typeof(Controllers.V1.LightboxController).Assembly));
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IApiExplorer), new RouteAttribExplorer.Explorer(typeof(Controllers.V1.LightboxController).Assembly, GlobalConfiguration.Configuration));
             AreaRegistration.RegisterAllAreas();
         }
 

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Text;
 using System.Web.Http;
@@ -17,12 +18,14 @@ namespace RouteAttribExplorer
     public class Explorer : IApiExplorer
     {
         private readonly Assembly _routeAssembly;
+        private readonly HttpConfiguration _configuration;
 
         private Collection<ApiDescription> _descriptions = null;
 
-        public Explorer(Assembly routeAssembly)
+        public Explorer(Assembly routeAssembly, HttpConfiguration configuration)
         {
             _routeAssembly = routeAssembly;
+            _configuration = configuration;
         }
 
         public Collection<ApiDescription> ApiDescriptions 
@@ -59,11 +62,19 @@ namespace RouteAttribExplorer
                             ActionDescriptor = new ReflectedHttpActionDescriptor(
                                 new HttpControllerDescriptor(new HttpConfiguration(), controller.Name, controller), method),
                             RelativePath = routeAttribute.RouteUrl,
+                            
                         };
+                        description.ActionDescriptor.Configuration = _configuration;
+                        
 
-                        var parameterDesciptions = new Collection<ApiParameterDescription>(new ParameterTools(this.DocumentationProvider).CreateParameterDescriptions(description.ActionDescriptor));
+                        description.Documentation = GetApiDocumentation(description.ActionDescriptor);
+
+                        var parameterDesciptions = new Collection<ApiParameterDescription>(new ParameterTools(DocumentationProvider ?? description.ActionDescriptor.Configuration.Services.GetDocumentationProvider()).CreateParameterDescriptions(description.ActionDescriptor));
 
                         description.SetParameterDescriptions(parameterDesciptions);
+
+                        description.SupportedRequestBodyFormatters.Add(new JsonMediaTypeFormatter());
+                        description.SupportedResponseFormatters.Add(new JsonMediaTypeFormatter());
 
                         collection.Add(description);
                         
@@ -75,6 +86,33 @@ namespace RouteAttribExplorer
 
             return collection;
         }
+
+        private string GetApiDocumentation(HttpActionDescriptor actionDescriptor)
+        {
+            IDocumentationProvider documentationProvider = DocumentationProvider ?? actionDescriptor.Configuration.Services.GetDocumentationProvider();
+            if (documentationProvider == null)
+            {
+                return string.Format("Documentation for {0}" , actionDescriptor.ActionName);
+            }
+
+            return documentationProvider.GetDocumentation(actionDescriptor);
+        }
+
+        //private IEnumerable<Media> GetRequestFormatters(Collection<ApiParameterDescription> parameterDescriptions)
+        //{
+        //    ApiParameterDescription bodyParameter = parameterDescriptions.FirstOrDefault(description => description.Source == ApiParameterSource.FromBody);
+        //    IEnumerable<MediaTypeFormatter> supportedRequestBodyFormatters = bodyParameter != null ?
+        //        actionDescriptor.Configuration.Formatters.Where(f => f.CanReadType(bodyParameter.ParameterDescriptor.ParameterType)) :
+        //        Enumerable.Empty<MediaTypeFormatter>();
+
+        //    //// response formatters
+        //    //Type returnType = actionDescriptor.ReturnType;
+        //    //IEnumerable<MediaTypeFormatter> supportedResponseFormatters = returnType != null ?
+        //    //    actionDescriptor.Configuration.Formatters.Where(f => f.CanWriteType(returnType)) :
+        //    //    Enumerable.Empty<MediaTypeFormatter>();
+
+        //    return supportedRequestBodyFormatters;
+        //}
 
         private HttpMethod RoutingAttributeMethod(object routeAttribute)
         {

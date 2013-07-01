@@ -53,11 +53,13 @@ namespace RouteAttribExplorer
 
         private ApiParameterDescription CreateParameterDescriptionFromDescriptor(HttpParameterDescriptor parameter)
         {
-            ApiParameterDescription parameterDescription = new ApiParameterDescription();
-            parameterDescription.ParameterDescriptor = parameter;
-            parameterDescription.Name = parameter.Prefix ?? parameter.ParameterName;
-            parameterDescription.Documentation = GetApiParameterDocumentation(parameter);
-            parameterDescription.Source = ApiParameterSource.Unknown;
+            var parameterDescription = new ApiParameterDescription
+            {
+                ParameterDescriptor = parameter,
+                Name = parameter.Prefix ?? parameter.ParameterName,
+                Documentation = GetApiParameterDocumentation(parameter),
+                Source = ApiParameterSource.Unknown
+            };
             return parameterDescription;
         }
 
