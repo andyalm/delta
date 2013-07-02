@@ -15,7 +15,7 @@ namespace RouteAttribHarness.Controllers.V1
         /// <param name="id">The ID of the cart</param>
         /// <returns>A fully formed cart, I suppose...</returns>
         [GET("/cart/{id}")]
-        public Cart Get(int id)
+        public Cart GetCart(int id)
         {
             return null;
         }

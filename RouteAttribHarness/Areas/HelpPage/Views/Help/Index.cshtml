@@ -9,7 +9,7 @@
     ViewBag.Title = "ASP.NET Web API Help Page";
 
     // Group APIs by controller
-    ILookup<string, ApiDescription> apiGroups = Model.ToLookup(api => "V" +  new NamespaceControllerVersionSelector().GetVersion(api.ActionDescriptor.ControllerDescriptor.ControllerType) + " " + api.ActionDescriptor.ControllerDescriptor.ControllerName);
+    ILookup<string, ApiDescription> apiGroups = Model.ToLookup(api => "V" +  api.Version() + " " + api.ActionDescriptor.ControllerDescriptor.ControllerName);
 }
 
 <header>

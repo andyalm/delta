@@ -21,11 +21,14 @@ namespace RouteAttribExplorer
         private readonly HttpConfiguration _configuration;
 
         private Collection<ApiDescription> _descriptions = null;
+        private IDocumentationProvider _documentationProvider;
+        private readonly IControllerVersionSelector _controllerVersionSelector;
 
         public Explorer(Assembly routeAssembly, HttpConfiguration configuration)
         {
             _routeAssembly = routeAssembly;
             _configuration = configuration;
+            _controllerVersionSelector = new NamespaceControllerVersionSelector();
         }
 
         public Collection<ApiDescription> ApiDescriptions 
@@ -39,13 +42,19 @@ namespace RouteAttribExplorer
         /// <value>
         /// The documentation provider.
         /// </value>
-        public IDocumentationProvider DocumentationProvider { get; set; }
+        public IDocumentationProvider DocumentationProvider
+        {
+            get
+            {
+                return _documentationProvider ?? _configuration.Services.GetDocumentationProvider();
+            }
+            set { _documentationProvider = value; }
+        }
 
         private Collection<ApiDescription> ExtractApiDescriptions()
         {
             var collection = new Collection<ApiDescription>();
             var controllers = _routeAssembly.GetTypes().Where(t => typeof(ApiController).IsAssignableFrom(t));
-
 
             foreach (var controller in controllers)
             {
@@ -56,31 +65,31 @@ namespace RouteAttribExplorer
                     //We can have multiple routes on a method.
                     foreach (var routeAttribute in method.GetCustomAttributes(true).OfType<HttpRouteAttribute>())
                     {
+
+                        var actionDescriptor = new ReflectedHttpActionDescriptor(new HttpControllerDescriptor(new HttpConfiguration(), controller.Name, controller), method)
+                        {
+                            Configuration = _configuration
+                        };
+
                         var description = new ApiDescription
                         {
                             HttpMethod = RoutingAttributeMethod(routeAttribute),
-                            ActionDescriptor = new ReflectedHttpActionDescriptor(
-                                new HttpControllerDescriptor(new HttpConfiguration(), controller.Name, controller), method),
+                            ActionDescriptor = actionDescriptor,
                             RelativePath = routeAttribute.RouteUrl,
-                            
+                            Documentation = GetApiDocumentation(actionDescriptor)
                         };
-                        description.ActionDescriptor.Configuration = _configuration;
-                        
 
-                        description.Documentation = GetApiDocumentation(description.ActionDescriptor);
-
-                        var parameterDesciptions = new Collection<ApiParameterDescription>(new ParameterTools(DocumentationProvider ?? description.ActionDescriptor.Configuration.Services.GetDocumentationProvider()).CreateParameterDescriptions(description.ActionDescriptor));
+                        var parameterDesciptions = new Collection<ApiParameterDescription>(new ParameterTools(DocumentationProvider).CreateParameterDescriptions(description.ActionDescriptor));
 
                         description.SetParameterDescriptions(parameterDesciptions);
 
                         description.SupportedRequestBodyFormatters.Add(new JsonMediaTypeFormatter());
                         description.SupportedResponseFormatters.Add(new JsonMediaTypeFormatter());
+                        description.SetVersion(_controllerVersionSelector.GetVersion(actionDescriptor.ControllerDescriptor.ControllerType));
 
                         collection.Add(description);
-                        
                     }
                 }
-
             }
 
 
@@ -97,22 +106,6 @@ namespace RouteAttribExplorer
 
             return documentationProvider.GetDocumentation(actionDescriptor);
         }
-
-        //private IEnumerable<Media> GetRequestFormatters(Collection<ApiParameterDescription> parameterDescriptions)
-        //{
-        //    ApiParameterDescription bodyParameter = parameterDescriptions.FirstOrDefault(description => description.Source == ApiParameterSource.FromBody);
-        //    IEnumerable<MediaTypeFormatter> supportedRequestBodyFormatters = bodyParameter != null ?
-        //        actionDescriptor.Configuration.Formatters.Where(f => f.CanReadType(bodyParameter.ParameterDescriptor.ParameterType)) :
-        //        Enumerable.Empty<MediaTypeFormatter>();
-
-        //    //// response formatters
-        //    //Type returnType = actionDescriptor.ReturnType;
-        //    //IEnumerable<MediaTypeFormatter> supportedResponseFormatters = returnType != null ?
-        //    //    actionDescriptor.Configuration.Formatters.Where(f => f.CanWriteType(returnType)) :
-        //    //    Enumerable.Empty<MediaTypeFormatter>();
-
-        //    return supportedRequestBodyFormatters;
-        //}
 
         private HttpMethod RoutingAttributeMethod(object routeAttribute)
         {

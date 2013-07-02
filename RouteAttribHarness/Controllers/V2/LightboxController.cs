@@ -12,21 +12,14 @@ namespace RouteAttribHarness.Controllers.V2
     [RoutePrefix("api2")]
     public class LightboxController : ApiController
     {
+        /// <summary>
+        /// Get lightboxes in the new way
+        /// </summary>
+        /// <param name="id">Lightbox Id</param>
         [GET("lightbox/{id}")]
-        public string Get(int id)
+        public string NewGet(int id)
         {
             return "I guess we should return a lightbox.";
-        }
-
-        /// <summary>
-        /// What's a lightbox without waffles?
-        /// </summary>
-        /// <param name="thingy"></param>
-        /// <returns></returns>
-        [POST("lightboxwaffle")]
-        public int AddStuff(V1.Thingy thingy)
-        {
-            return 99;
         }
     }
 

@@ -12,8 +12,13 @@ namespace RouteAttribHarness.Controllers.V1
     [RoutePrefix("api2")]
     public class LightboxController : ApiController
     {
+        /// <summary>
+        /// Get lightboxes in the old way.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [GET("lightbox/{id}")]
-        public string Get(int id)
+        public string OldGet(int id)
         {
             return "I guess we should return a lightbox.";
         }
