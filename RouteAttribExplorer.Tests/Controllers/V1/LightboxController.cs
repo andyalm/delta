@@ -1,21 +1,40 @@
 ﻿using System.Web.Http;
+using AttributeRouting;
 using AttributeRouting.Web.Http;
 
 namespace RouteAttribExplorer.Tests.Controllers.V1
 {
+    [RoutePrefix("api")]
+    [RoutePrefix("api2")]
     public class LightboxController : ApiController
     {
-        [GET("lightboxes/{id}")]
-        public Lightbox Get(int id)
+        /// <summary>
+        /// Get lightboxes in the old way.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [GET("lightbox/{id}")]
+        public string OldGet(int id)
         {
-            return new Lightbox();
+            return "I guess we should return a lightbox.";
+        }
+
+        /// <summary>
+        /// Adding stuff to a thingy.
+        /// </summary>
+        /// <param name="thingy">Thingy is the parameter!  W00t!</param>
+        /// <returns></returns>
+        [POST("lightbox")]
+        public int AddStuff(Thingy thingy)
+        {
+            return 99;
         }
     }
 
-    public class Lightbox
+    public class Thingy
     {
-        string Id { get; set; }
-        public string Name { get; set; }
+        public string Whatsit;
+        public int Whoa;
     }
 
 }

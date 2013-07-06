@@ -58,13 +58,14 @@ namespace RouteAttribExplorer
 
             foreach (var controller in controllers)
             {
-                var methods =
-                    controller.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(MethodIsHttpRoute);
+                //TODO: get controller deprecated version if any.
+                var methods = controller.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(MethodIsHttpRoute);
                 foreach (var method in methods)
                 {
                     //We can have multiple routes on a method.
                     foreach (var routeAttribute in method.GetCustomAttributes(true).OfType<HttpRouteAttribute>())
                     {
+                        //TODO: get method deprecated version if any; combine with controller version and stamp the description.
 
                         var actionDescriptor = new ReflectedHttpActionDescriptor(new HttpControllerDescriptor(new HttpConfiguration(), controller.Name, controller), method)
                         {
@@ -92,9 +93,60 @@ namespace RouteAttribExplorer
                 }
             }
 
-
-            return collection;
+            return ExtrapolateVersions(collection);
         }
+
+        private Collection<ApiDescription> ExtrapolateVersions(Collection<ApiDescription> descriptions)
+        {
+            var newDescriptions = new List<ApiDescription>();
+
+            var versionList = descriptions.Select(d => d.Version()).Distinct().OrderBy(v => v);
+            IEnumerable<ApiDescription> previousVersionDescriptions = null;
+            foreach (var version in versionList)
+            {
+                var thisVersionDescriptions = descriptions.Where(d => d.Version() == version).ToList();
+                if (previousVersionDescriptions != null)
+                {
+                    //check the previous version; if it's got anything we don't have, add it in.
+                    foreach (var previousDescription in previousVersionDescriptions)
+                    {
+                        if (thisVersionDescriptions.All(d => d.RelativePath != previousDescription.RelativePath) && version < previousDescription.DeprecatedVersion())
+                        {
+                            var newDescription = CloneToVersion(previousDescription, version);
+                            thisVersionDescriptions.Add(newDescription);
+                        }
+                    }
+                }
+
+                previousVersionDescriptions = thisVersionDescriptions;
+                newDescriptions.AddRange(thisVersionDescriptions);
+            }
+
+            return new Collection<ApiDescription>(newDescriptions.ToList());
+        }
+
+        private ApiDescription CloneToVersion(ApiDescription originalDescription, int newVersion)
+        {
+            var newDescription = new ApiDescription
+            {
+                ActionDescriptor = originalDescription.ActionDescriptor,
+                Documentation = originalDescription.Documentation,
+                HttpMethod = originalDescription.HttpMethod,
+                RelativePath = originalDescription.RelativePath,
+                Route = originalDescription.Route,
+
+            };
+
+            newDescription.SetParameterDescriptions(originalDescription.ParameterDescriptions);
+            //ID doesn't appear to have a setter, private or otherwise.
+            //newDescription.SetID(originalDescription.ID); //We really shouldn't be cloning this; may not matter for docs though.
+            newDescription.SetSupportedRequestBodyFormatters(originalDescription.SupportedRequestBodyFormatters);
+            newDescription.SetSupportedResponseFormatters(originalDescription.SupportedResponseFormatters);
+            newDescription.SetDeprecatedVersion(originalDescription.DeprecatedVersion());
+            newDescription.SetVersion(newVersion);
+            return newDescription;
+        }
+
 
         private string GetApiDocumentation(HttpActionDescriptor actionDescriptor)
         {

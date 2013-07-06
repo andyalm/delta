@@ -61,11 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Basic.cs" />
-    <Compile Include="Controllers\V1\BadIdeaController.cs" />
+    <Compile Include="Controllers\V1\OrderController.cs" />
+    <Compile Include="Controllers\V2\LightboxController.cs" />
+    <Compile Include="OperationInference.cs" />
     <Compile Include="Controllers\V1\CartController.cs" />
     <Compile Include="Controllers\V1\LightboxController.cs" />
-    <Compile Include="Controllers\V2\CartController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
