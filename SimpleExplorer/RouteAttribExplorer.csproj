@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdditionalMethodAttributes.cs" />
     <Compile Include="ControllerVersionSelectors.cs" />
     <Compile Include="DeprecatedInVersionAttribute.cs" />
     <Compile Include="Extensions.cs" />

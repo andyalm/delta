@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net.Http.Formatting;
 using System.Text;
+using System.Web.Http.Controllers;
 using System.Web.Http.Description;
 
 namespace RouteAttribExplorer
@@ -61,7 +62,6 @@ namespace RouteAttribExplorer
             if (!description.ActionDescriptor.Properties.ContainsKey(DeprecatedInVersionProperty)) return int.MaxValue;
             return (int)description.ActionDescriptor.Properties[DeprecatedInVersionProperty];
         }
-
 
     }
 }

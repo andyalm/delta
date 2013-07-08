@@ -58,15 +58,16 @@ namespace RouteAttribExplorer
 
             foreach (var controller in controllers)
             {
-                //TODO: get controller deprecated version if any.
+                var controllerDeprecatedAtVersion = GetControllerDeprecatedAtVersion(controller);
+
                 var methods = controller.GetMethods(BindingFlags.Instance | BindingFlags.Public).Where(MethodIsHttpRoute);
                 foreach (var method in methods)
                 {
+                    int methodDeprecatedAtVersion = GetMethodDeprecatedAtVersion(method);
+
                     //We can have multiple routes on a method.
                     foreach (var routeAttribute in method.GetCustomAttributes(true).OfType<HttpRouteAttribute>())
                     {
-                        //TODO: get method deprecated version if any; combine with controller version and stamp the description.
-
                         var actionDescriptor = new ReflectedHttpActionDescriptor(new HttpControllerDescriptor(new HttpConfiguration(), controller.Name, controller), method)
                         {
                             Configuration = _configuration
@@ -88,12 +89,40 @@ namespace RouteAttribExplorer
                         description.SupportedResponseFormatters.Add(new JsonMediaTypeFormatter());
                         description.SetVersion(_controllerVersionSelector.GetVersion(actionDescriptor.ControllerDescriptor.ControllerType));
 
+                        description.SetDeprecatedVersion(methodDeprecatedAtVersion < controllerDeprecatedAtVersion ? methodDeprecatedAtVersion : controllerDeprecatedAtVersion );
+
                         collection.Add(description);
                     }
                 }
             }
 
             return ExtrapolateVersions(collection);
+        }
+
+        private static int GetControllerDeprecatedAtVersion(Type controller)
+        {
+            int controllerDeprecatedAtVersion = int.MaxValue;
+
+            var deprecationAttribute = controller.GetCustomAttributes(typeof (DeprecatedInVersionAttribute), true)
+                                                 .Cast<DeprecatedInVersionAttribute>()
+                                                 .SingleOrDefault();
+
+            if (deprecationAttribute != null) controllerDeprecatedAtVersion = deprecationAttribute.Version;
+            return controllerDeprecatedAtVersion;
+        }
+
+        private static int GetMethodDeprecatedAtVersion(MethodInfo method)
+        {
+            int methodDeprecatedAtVersion = int.MaxValue;
+
+            var methodDeprecationAttribute =
+                method.GetCustomAttributes(typeof (DeprecatedInVersionAttribute), true)
+                      .Cast<DeprecatedInVersionAttribute>()
+                      .SingleOrDefault();
+
+            if (methodDeprecationAttribute != null)
+                methodDeprecatedAtVersion = methodDeprecationAttribute.Version;
+            return methodDeprecatedAtVersion;
         }
 
         private Collection<ApiDescription> ExtrapolateVersions(Collection<ApiDescription> descriptions)
@@ -129,24 +158,32 @@ namespace RouteAttribExplorer
         {
             var newDescription = new ApiDescription
             {
-                ActionDescriptor = originalDescription.ActionDescriptor,
                 Documentation = originalDescription.Documentation,
                 HttpMethod = originalDescription.HttpMethod,
                 RelativePath = originalDescription.RelativePath,
                 Route = originalDescription.Route,
-
+            };
+            
+            //Can't just copy the reference, since we're putting the version in the ActionDescriptor's properties
+            var methodInfo = originalDescription.ActionDescriptor.ControllerDescriptor.ControllerType.GetMethod(originalDescription.ActionDescriptor.ActionName);
+            newDescription.ActionDescriptor = new ReflectedHttpActionDescriptor(
+                new HttpControllerDescriptor(
+                    new HttpConfiguration(), 
+                    originalDescription.ActionDescriptor.ControllerDescriptor.ControllerName, 
+                    originalDescription.ActionDescriptor.ControllerDescriptor.ControllerType), 
+                methodInfo)
+            {
+                Configuration = _configuration
             };
 
             newDescription.SetParameterDescriptions(originalDescription.ParameterDescriptions);
-            //ID doesn't appear to have a setter, private or otherwise.
-            //newDescription.SetID(originalDescription.ID); //We really shouldn't be cloning this; may not matter for docs though.
             newDescription.SetSupportedRequestBodyFormatters(originalDescription.SupportedRequestBodyFormatters);
             newDescription.SetSupportedResponseFormatters(originalDescription.SupportedResponseFormatters);
             newDescription.SetDeprecatedVersion(originalDescription.DeprecatedVersion());
             newDescription.SetVersion(newVersion);
+            //ID isn't setable as it's calculated.  This means we could have some version conflicts if there's something that assumes the ID is unique...
             return newDescription;
         }
-
 
         private string GetApiDocumentation(HttpActionDescriptor actionDescriptor)
         {
@@ -159,7 +196,7 @@ namespace RouteAttribExplorer
             return documentationProvider.GetDocumentation(actionDescriptor);
         }
 
-        private HttpMethod RoutingAttributeMethod(object routeAttribute)
+        private HttpMethod RoutingAttributeMethod(HttpRouteAttribute routeAttribute)
         {
             if(routeAttribute is GETAttribute)
                 return HttpMethod.Get;
@@ -169,9 +206,11 @@ namespace RouteAttribExplorer
                 return HttpMethod.Put;
             if (routeAttribute is DELETEAttribute)
                 return HttpMethod.Delete;
+            if (routeAttribute is HEADAttribute)
+                return HttpMethod.Head;
+            if (routeAttribute is OPTIONSAttribute)
+                return HttpMethod.Options;
 
-            //TODO: we can also have other attributes (e.g. HEAD, options) which we can extract from the base class.
-            
             throw new ApplicationException("Can't get HttpAttribute from attribute:" + routeAttribute.GetType().Name);
         }
 

@@ -33,6 +33,12 @@ namespace RouteAttribExplorer.Tests
         }
 
         [Test]
+        public void V1OperationPresentInV1()
+        {
+            AssertExists(1, "LightboxController", "AddStuff");
+        }
+
+        [Test]
         public void V1OperationInferredInV2()
         {
             AssertExists(2, "LightboxController", "AddStuff");
