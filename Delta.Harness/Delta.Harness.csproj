@@ -44,6 +44,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AttributeRouting, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Delta\bin\Debug\AttributeRouting.dll</HintPath>
+    </Reference>
+    <Reference Include="AttributeRouting.Web.Http, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Delta\bin\Debug\AttributeRouting.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -129,7 +137,8 @@
     <Compile Include="Controllers\V1\BadIdeaController.cs" />
     <Compile Include="Controllers\V1\CartController.cs" />
     <Compile Include="Controllers\V1\LightboxController.cs" />
-    <Compile Include="Controllers\V2\Cart2Controller.cs" />
+    <Compile Include="Controllers\V1\OrderController.cs" />
+    <Compile Include="Controllers\V2\LightboxController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,10 +184,6 @@
     <Content Include="Areas\HelpPage\Views\_ViewStart.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Delta.Explorer\Delta.Explorer.csproj">
-      <Project>{14c45f60-4808-410c-a701-dee5a3e46f82}</Project>
-      <Name>Delta.Explorer</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Delta\Delta.csproj">
       <Project>{1402853E-4C05-4FE8-9EB8-1EFEE51566E1}</Project>
       <Name>Delta</Name>

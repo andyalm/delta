@@ -194,8 +194,8 @@ namespace Harness2.Areas.HelpPage
             string modelId = ApiModelPrefix + apiDescriptionId;
             if (!config.Properties.TryGetValue(modelId, out model))
             {
-                Collection<Delta.Explorer.ApiDescription> apiDescriptions = ApiExplorerFactory.Current.ApiDescriptions;
-                Delta.Explorer.ApiDescription apiDescription = apiDescriptions.FirstOrDefault(api => String.Equals(api.GetFriendlyId(), apiDescriptionId, StringComparison.OrdinalIgnoreCase));
+                Collection<ApiDescription> apiDescriptions = config.Services.GetApiExplorer().ApiDescriptions;  //NOTE: differs from standard
+                ApiDescription apiDescription = apiDescriptions.FirstOrDefault(api => String.Equals(api.GetFriendlyId(), apiDescriptionId, StringComparison.OrdinalIgnoreCase));
                 if (apiDescription != null)
                 {
                     HelpPageSampleGenerator sampleGenerator = config.GetHelpPageSampleGenerator();
@@ -208,7 +208,7 @@ namespace Harness2.Areas.HelpPage
         }
 
         [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes", Justification = "The exception is recorded as ErrorMessages.")]
-        private static HelpPageApiModel GenerateApiModel(Delta.Explorer.ApiDescription apiDescription, HelpPageSampleGenerator sampleGenerator)
+        private static HelpPageApiModel GenerateApiModel(ApiDescription apiDescription, HelpPageSampleGenerator sampleGenerator)
         {
             HelpPageApiModel apiModel = new HelpPageApiModel();
             apiModel.ApiDescription = apiDescription;

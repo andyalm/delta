@@ -1,8 +1,8 @@
 using System;
 //using System.Web.Http;
+using System.Web.Http;
 using System.Web.Mvc;
 using Harness2.Areas.HelpPage.Models;
-using Delta.Explorer;
 namespace Harness2.Areas.HelpPage.Controllers
 {
     /// <summary>
@@ -11,20 +11,20 @@ namespace Harness2.Areas.HelpPage.Controllers
     public class HelpController : Controller
     {
         public HelpController()
-            : this(System.Web.Http.GlobalConfiguration.Configuration)
+            : this(GlobalConfiguration.Configuration)
         {
         }
 
-        public HelpController(System.Web.Http.HttpConfiguration config)
+        public HelpController(HttpConfiguration config)
         {
             Configuration = config;
         }
 
-        public System.Web.Http.HttpConfiguration Configuration { get; private set; }
+        public HttpConfiguration Configuration { get; private set; }
 
         public ActionResult Index()
         {
-            return View(ApiExplorerFactory.Current.ApiDescriptions);
+            return View(Configuration.Services.GetApiExplorer().ApiDescriptions); //NOTE: different from default
         }
 
         public ActionResult Api(string apiId)

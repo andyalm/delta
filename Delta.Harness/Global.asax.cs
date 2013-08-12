@@ -23,7 +23,7 @@ namespace Harness2
             var config = GlobalConfiguration.Configuration;
 
             if(useCustom)
-                config.Services.Replace(typeof(IHttpControllerSelector), new DeltaVersionedControllerSelector(config, new RouteRequestVersionSelector(), new NamespaceControllerVersionSelector()));
+                GlobalConfiguration.Configuration.Services.Replace(typeof(IApiExplorer), new Delta.ApiExplorer.Explorer(typeof(Controllers.V1.LightboxController).Assembly, GlobalConfiguration.Configuration));
             
 
             AreaRegistration.RegisterAllAreas();

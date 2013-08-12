@@ -1,21 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Http;
+﻿using System.Web.Http;
+using AttributeRouting.Web.Http;
 
-namespace Delta.Tests.Controllers.V1
+namespace Harness2.Controllers.V1
 {
     public class CartController : ApiController
     {
-        public int Post()
+        /// <summary>
+        /// Get a cart
+        /// </summary>
+        /// <param name="id">The ID of the cart</param>
+        /// <returns>A fully formed cart, I suppose...</returns>
+        [GET("/cart/{id}")]
+        public Cart GetCart(int id)
         {
-            return 99;
+            return null;
         }
 
-        public string Get()
-        {
-            return "Hello world!  (v1)";
-        }
+    }
+
+    public class Cart
+    {
+        public string Name { get; set; }
+        public int ItemCount { get; set; }
     }
 }
